@@ -38,15 +38,22 @@ jobs:
       run: ./gradlew build
 
     - name: rsync deployments
-      uses: burnett01/rsync-deployments@6.0.0
+      uses: contention/rsync-deployments@v2.0.0
       with:
-        switches: -avzr --delete
-        path: /
-        remote_path: /home/hee/v2
-        remote_host: ${{ secrets.HOST }}
-        remote_user: hee
-        remote_key: ${{ secrets.PASSWORD }}
-        remote_port: ${{ secrets.PORT }}
+        FLAGS: -avzr --delete
+#        EXCLUDES: --exclude .htaccess --exclude /uploads/
+        USER: hee
+        HOST: ${{ secrets.HOST }}
+        LOCALPATH: /
+        REMOTEPATH: /home/hee/v2
+        DEPLOY_KEY: ${{ secrets.PASSWORD }}
+#        switches: -avzr --delete
+#        path: /
+#        remote_path: /home/hee/v2
+#        remote_host: ${{ secrets.HOST }}
+#        remote_user: hee
+#        remote_key: ${{ secrets.PASSWORD }}
+#        remote_port: ${{ secrets.PORT }}
 
     - name: login to server
       uses: appleboy/ssh-action@v1.0.3
