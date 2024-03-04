@@ -37,6 +37,16 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+    - name: rsync deployments
+      uses: burnett01/rsync-deployments@6.0.0
+      with:
+        switches: -avzr --delete
+        remote_path: /home/hee/v2
+        remote_host: ${{ secrets.HOST }}
+        remote_user: hee
+        remote_key: ${{ secrets.PASSWORD }}
+        remote_port: ${{ secrets.PORT }}
+
     - name: login to server
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -44,4 +54,6 @@ jobs:
         username: hee
         key: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: whoami
+        script: |
+          whoami
+          ls v2
