@@ -36,3 +36,12 @@ jobs:
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
+
+    - name: login to server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: hee
+        key: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: whoami
