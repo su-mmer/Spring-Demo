@@ -38,7 +38,7 @@ jobs:
       run: ./gradlew build
 
     - name: pwd
-      run: ls -al
+      run: ls build/libs
 
 #    - name: rsync deployments
 #      uses: contention/rsync-deployments@v2.0.0
