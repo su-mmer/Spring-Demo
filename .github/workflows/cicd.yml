@@ -37,6 +37,9 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+    - name: pwd
+      run: ls -al
+
 #    - name: rsync deployments
 #      uses: contention/rsync-deployments@v2.0.0
 #      with:
@@ -64,5 +67,4 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           whoami
-          pwd
           ls -al
