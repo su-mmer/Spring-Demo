@@ -67,6 +67,7 @@ jobs:
         port: ${{ secrets.PORT }}
         source: build/libs/demo-0.0.1-SNAPSHOT.jar
         target: /home/hee/v2
+        strip_components: 2
 #        script: |
 #          whoami
 #          ls -al
