@@ -37,27 +37,6 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
-#    - name: pwd
-#      run: scp build/libs/demo-0.0.1-SNAPSHOT.jar hee@192.168.000.000:/test
-
-#    - name: rsync deployments
-#      uses: contention/rsync-deployments@v2.0.0
-#      with:
-#        FLAGS: -avzr --delete
-#        EXCLUDES: --exclude .htaccess --exclude /uploads/
-#        USER: hee
-#        HOST: ${{ secrets.HOST }}
-#        LOCALPATH: /
-#        REMOTEPATH: /home/hee/v2
-#        DEPLOY_KEY: ${{ secrets.PASSWORD }}
-#        switches: -avzr --delete
-#        path: /
-#        remote_path: /home/hee/v2
-#        remote_host: ${{ secrets.HOST }}
-#        remote_user: hee
-#        remote_key: ${{ secrets.PASSWORD }}
-#        remote_port: ${{ secrets.PORT }}
-
     - name: copy file via ssh password to server
       uses: appleboy/scp-action@v0.1.7
       with:
@@ -68,6 +47,3 @@ jobs:
         source: build/libs/demo-0.0.1-SNAPSHOT.jar
         target: /home/hee/v2
         strip_components: 2
-#        script: |
-#          whoami
-#          ls -al
