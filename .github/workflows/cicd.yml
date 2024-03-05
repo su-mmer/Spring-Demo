@@ -37,8 +37,8 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
-    - name: pwd
-      run: ls build/libs
+#    - name: pwd
+#      run: scp build/libs/demo-0.0.1-SNAPSHOT.jar hee@192.168.000.000:/test
 
 #    - name: rsync deployments
 #      uses: contention/rsync-deployments@v2.0.0
@@ -58,13 +58,15 @@ jobs:
 #        remote_key: ${{ secrets.PASSWORD }}
 #        remote_port: ${{ secrets.PORT }}
 
-    - name: login to server
-      uses: appleboy/ssh-action@v1.0.3
+    - name: copy file via ssh password to server
+      uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.HOST }}
         username: hee
         key: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: |
-          whoami
-          ls -al
+        source: build/libs/demo-0.0.1-SNAPSHOT.jar
+        target: /home/hee/v2
+#        script: |
+#          whoami
+#          ls -al
