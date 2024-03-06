@@ -56,4 +56,4 @@ jobs:
         key: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script:
-          sh start.sh
+          sudo ./start.sh
