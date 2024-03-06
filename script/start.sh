@@ -35,9 +35,11 @@ nohup java -jar $APP_DIR/*.jar >> $APP_LOG
 ### 4. 상태코드 확인 ###
 RESPONSE_CODE=$(sudo curl -s -o /dev/null -w "%{http_code}" http://localhost:8080)
 
-if [ "$RESPONSE_CODE" == 200 ]; then # 4-1. http 200(성공) -> v2를 v1로 덮어쓰기
+if [ "$RESPONSE_CODE" -eq 200 ]; then # 4-1. http 200(성공) -> v2를 v1로 덮어쓰기
+  echo "v2 success, copy to v1"
   cp $V2_DIR/*.jar $V1_DIR/v1.jar
 else # 4-2. 실패 -> 롤백하고 다시 실행시키기
+  echo "v2 failure, roll back to v1"
   cp $V1_DIR/*.jar $APP_DIR/v1.jar
   nohup java -jar $APP_DIR/*.jar >> $APP_LOG
 fi
