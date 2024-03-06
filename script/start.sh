@@ -3,7 +3,7 @@
 #V1_DIR="/home/hee/v1"
 V2_DIR="/home/hee/v2"
 #APP_DIR="/home/hee/app"
-LOG_DIR="/home/log"
+LOG_DIR="/home/hee/log"
 JAR_FILE="/home/hee/app/execute.jar"
 
 APP_LOG="$LOG_DIR/application.log"
