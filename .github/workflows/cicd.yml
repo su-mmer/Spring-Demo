@@ -55,5 +55,6 @@ jobs:
         username: hee
         key: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
+        command_timeout: 3m
         script:
-          sudo sh start.sh
+          sh start.sh

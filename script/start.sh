@@ -18,7 +18,7 @@ cp $V2_DIR/*.jar $APP_DIR/v2.jar
 
 ### 2. 기존 app 종료 ###
 # 현재 구동 중인 애플리케이션 pid 확인
-CURRENT_PID=$(pgrep -f $APP_DIR/v2.jar)
+CURRENT_PID=$(pgrep -f $APP_DIR/*.jar)
 
 # 프로세스가 켜져 있으면 종료
 if [ -z "$CURRENT_PID" ]; then
@@ -29,17 +29,20 @@ else
 fi
 
 ### 3. 새 jar 파일 실행 ###
-echo "$TIME_NOW > $JAR_FILE 파일 실행" >> $DEPLOY_LOG
+echo "$TIME_NOW > v2 파일 실행" >> $DEPLOY_LOG
 nohup java -jar $APP_DIR/*.jar >> $APP_LOG
+sleep 10;
 
 ### 4. 상태코드 확인 ###
-RESPONSE_CODE=$(sudo curl -s -o /dev/null -w "%{http_code}" http://localhost:8080)
+RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080)
+echo "$RESPONSE_CODE" > "response.text"
+CODE=$(cat "response.text")
 
-if [ "$RESPONSE_CODE" -eq 200 ]; then # 4-1. http 200(성공) -> v2를 v1로 덮어쓰기
-  echo "v2 success, copy to v1"
+if [ "$CODE" -eq 200 ]; then # 4-1. http 200(성공) -> v2를 v1로 덮어쓰기
+  echo "v2 success, copy to v1" >> $DEPLOY_LOG
   cp $V2_DIR/*.jar $V1_DIR/v1.jar
 else # 4-2. 실패 -> 롤백하고 다시 실행시키기
-  echo "v2 failure, roll back to v1"
+  echo "v2 failure, roll back to v1" >> $DEPLOY_LOG
   cp $V1_DIR/*.jar $APP_DIR/v1.jar
   nohup java -jar $APP_DIR/*.jar >> $APP_LOG
 fi
