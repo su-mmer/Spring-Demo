@@ -1,8 +1,10 @@
-#!/usr/bin/env bash
+#! /bin/bash
 
-flag=0
-while [ "$flag" -eq 1 ]
+number=0
+while [ "$number" -lt 1 ]
+#for i in 1
 do
+  echo "This is first flag: $number" >> "flag.text"
   V1_DIR="/home/hee/v1"
   V2_DIR="/home/hee/v2"
   APP_DIR="/home/hee/app"
@@ -10,7 +12,7 @@ do
   JAR_FILE="$APP_DIR/*.jar"
 
   APP_LOG="$LOG_DIR/application.log"
-  #ERROR_LOG="$LOG_DIR/error.log"
+  ERROR_LOG="$LOG_DIR/error.log"
   DEPLOY_LOG="$LOG_DIR/deploy.log"
 
   TIME_NOW=$(date +%c)
@@ -33,7 +35,7 @@ do
 
   ### 3. 새 jar 파일 실행 ###
   echo "$TIME_NOW > v2 파일 실행" >> $DEPLOY_LOG
-  nohup java -jar $APP_DIR/*.jar >> $APP_LOG
+  nohup java -jar $APP_DIR/*.jar >> $APP_LOG 2> $ERROR_LOG &
   sleep 10;
 
   ### 4. 상태코드 확인 ###
@@ -47,11 +49,13 @@ do
   else # 4-2. 실패 -> 롤백하고 다시 실행시키기
     echo "v2 failure, roll back to v1" >> $DEPLOY_LOG
     cp $V1_DIR/*.jar $APP_DIR/v1.jar
-    nohup java -jar $APP_DIR/*.jar >> $APP_LOG
+    nohup java -jar $APP_DIR/*.jar >> $APP_LOG 2> $ERROR_LOG &
   fi
 
   CURRENT_PID=$(pgrep -f $APP_DIR/*.jar)
   echo "$TIME_NOW > 실행된 프로세스 아이디 $CURRENT_PID 입니다." >> $DEPLOY_LOG
 
-  flag=1
+#  ((number++))
+  number=$((number+1))
+  echo "This is last flag: $number" >> "flag.text"
 done
