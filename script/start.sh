@@ -1,10 +1,9 @@
 #! /bin/bash
 
-number=0
-while [ "$number" -lt 1 ]
-#for i in 1
+flag=0
+while [ "$flag" -lt 1 ]
 do
-  echo "This is first flag: $number" >> "flag.text"
+  echo "This is first flag: $flag" >> "flag.text"
   V1_DIR="/home/hee/v1"
   V2_DIR="/home/hee/v2"
   APP_DIR="/home/hee/app"
@@ -55,7 +54,6 @@ do
   CURRENT_PID=$(pgrep -f $APP_DIR/*.jar)
   echo "$TIME_NOW > 실행된 프로세스 아이디 $CURRENT_PID 입니다." >> $DEPLOY_LOG
 
-#  ((number++))
-  number=$((number+1))
-  echo "This is last flag: $number" >> "flag.text"
+  flag=$((flag+1))
+  echo "This is last flag: $flag" >> "flag.text"
 done
