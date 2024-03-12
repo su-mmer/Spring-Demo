@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Java CI and Jenkins
 
 on:
   push:
@@ -27,3 +27,22 @@ jobs:
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
+
+    - name: copy file via ssh password to server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: hee
+        key: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        source: build/libs/demo-0.0.1-SNAPSHOT.jar
+        target: /home/hee/v2
+        strip_components: 2
+
+    - name: trigger single Job
+      uses: appleboy/jenkins-action@master
+      with:
+        url: ${{ secrets.JENKINS_URL }}
+        user: "admin"
+        token: ${{ secrets.JENKINS_TOKEN }}
+        job: "jenkinstest"
