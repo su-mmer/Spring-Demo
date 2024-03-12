@@ -36,7 +36,7 @@ jobs:
         key: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         source: build/libs/demo-0.0.1-SNAPSHOT.jar
-        target: /home/hee/v2
+        target: /home/hee/jenkins
         strip_components: 2
 
     - name: trigger single Job
