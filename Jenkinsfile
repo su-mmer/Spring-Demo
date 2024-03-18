@@ -1,13 +1,18 @@
 pipeline {
   agent any
   stages {
-    stage('error') {
+    stage('SSH Agent Command') {
       steps {
-        sh '''whoami
-hostname
-hostname -i'''
+        sshagent (credentials: ['heekey'])
+        sh '''
+        ssh -o StrictHostKeyChecking=no ${TARGET_HOST} '
+                        whoami
+                    '
+        '''
       }
     }
 
-  }
+  }environment {
+        TARGET_HOST = "hee@${{ secrets.HOST }}"
+    }
 }
