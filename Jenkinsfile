@@ -5,15 +5,9 @@ pipeline {
       steps {
         sh '''whoami
 hostname
-hostname -i'''
-      }
-    }
-
-    stage('ssh') {
-      steps {
-        sh '''ssh -T comm1
-hostname
-hostname -i'''
+hostname -i
+cat ~/.ssh/config
+ssh -T comm1'''
       }
     }
 
