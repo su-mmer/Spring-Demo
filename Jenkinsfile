@@ -9,9 +9,9 @@ hostname -i'''
       }
     }
 
-    stage('') {
+    stage('ssh') {
       steps {
-        sh '''ssh comm1
+        sh '''ssh -T comm1
 hostname
 hostname -i'''
       }
