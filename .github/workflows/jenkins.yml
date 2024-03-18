@@ -28,7 +28,7 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
-    - name: copy file via ssh password to server
+    - name: Copy file via ssh password to server
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.HOST }}
@@ -39,10 +39,10 @@ jobs:
         target: /home/hee/jenkins
         strip_components: 2
 
-    - name: trigger jenkins Job
+    - name: Trigger jenkins Job
       uses: appleboy/jenkins-action@master
       with:
         url: ${{ secrets.JENKINS_URL }}
         user: "admin"
         token: ${{ secrets.JENKINS_TOKEN }}
-        job: "jenkinstest"
+        job: "Spring-Demo"
