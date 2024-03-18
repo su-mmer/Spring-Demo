@@ -1,10 +1,12 @@
 pipeline {
   agent any
   stages {
-    stage('error') {
+    stage('check') {
       steps {
-        sh '''whoami
-hostname
-hostname -i'''
+        sh '''
+        whoami
+        hostname
+        hostname -i
+        '''
       }
     }
