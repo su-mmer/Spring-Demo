@@ -10,5 +10,11 @@ pipeline {
       }
     }
 
+    stage('') {
+      steps {
+        slackSend(color: '#00FF00', channel: '#alarm-test', message: 'Jenkins Start', token: 'S69GSJhyn9xxeIAyTK5ckr5k', tokenCredentialId: 'slack_test')
+      }
+    }
+
   }
 }
