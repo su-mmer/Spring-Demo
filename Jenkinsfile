@@ -3,9 +3,7 @@ pipeline {
   stages {
     stage('start message to slack') {
       steps {
-        script {
-          slackSend channel: '#alarm-test', message: 'Jenkins Start Pipeline: Job \'${env.JOB_NAME} [${env.BUILD_NUMBER}]\' (${env.BUILD_URL})', teamDomain: 'hhkimTest', tokenCredentialId: 'slack_test'
-        }
+          slackSend (channel: '#alarm-test', color: '#009900', message: "Jenkins Start Pipeline: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
 
       }
     }
