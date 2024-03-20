@@ -17,6 +17,12 @@ pipeline {
       }
     }
 
+    stage('response http request') {
+      steps {
+        httpRequest (responseHandle: 'NONE', url: 'http://${target}')
+      }
+    }
+
   }
   post {
         success {
