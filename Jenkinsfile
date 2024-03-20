@@ -22,7 +22,7 @@ pipeline {
         RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target})
         echo "$RESPONSE_CODE"
         '''
-        slackSend(channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        slackSend(channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Code (${RESPONSE_CODE}): Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
     }
 
