@@ -28,7 +28,7 @@ pipeline {
           // RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target}:8080)
           // echo "$RESPONSE_CODE"
           // '''
-          RESPONSE_CODE=sh(script: "curl -s -o /dev/null -w "%{http_code}" http://${target}:8080", returnStdout: true).trim();
+          RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
         }
         slackSend (channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
