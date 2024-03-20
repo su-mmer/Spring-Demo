@@ -27,19 +27,13 @@ pipeline {
           RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
         }
       }
-      // def getHttpCode() {
-      //   script{
-      //     return sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
-      //   }
-      // }
       when {
-        expression {RESPONSE_CODE()==200}
+        expression {RESPONSE_CODE==200}
       }
       steps {
         // script{
         //   RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
         // }
-        // RESPONSE_CODE=getHttpCode()
         slackSend (channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
     }
