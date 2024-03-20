@@ -42,7 +42,7 @@ pipeline {
 
     stage('application check fail') {
       when {
-        not equals expected: "${RESPONSE_CODE}", actual: "200"
+        expression {"${RESPONSE_CODE}"!="200"}
       }
 
       steps {
