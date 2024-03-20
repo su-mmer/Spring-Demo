@@ -19,7 +19,10 @@ pipeline {
 
     stage('response http request') {
       steps {
-        httpRequest (responseHandle: 'NONE', url: 'http://${target}')
+        sh ```
+        RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target})
+        echo "$RESPONSE_CODE"
+        ```
       }
     }
 
