@@ -30,23 +30,24 @@ pipeline {
       }
     }
 
-    stage('application check') {
-      // steps {
-      //   script {
-      //     echo "$RESPONSE_CODE"  // 200
-      //   }
-      // }
+    stage('application check success') {
       when {
         equals expected: "${RESPONSE_CODE}", actual: "200"
       }
-      // steps {
-        // script{
-        //   RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
-        // }
+
       steps {
-        slackSend (channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        slackSend (channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Success Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
-      // }
+    }
+
+    stage('application check fail') {
+      when {
+        not equals expected: "${RESPONSE_CODE}", actual: "200"
+      }
+
+      steps {
+        slackSend (channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Fail Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      }
     }
 
     // stage('response http request') {
