@@ -22,14 +22,14 @@ pipeline {
     }
 
     stage('response http request') {
+      when {
+        expression {getHttpCode()==200}
+      }
       steps {
-        script{
-          // sh '''
-          // RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target}:8080)
-          // echo "$RESPONSE_CODE"
-          // '''
-          RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
-        }
+        // script{
+        //   RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
+        // }
+        RESPONSE_CODE=getHttpCode()
         slackSend (channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
     }
@@ -37,14 +37,18 @@ pipeline {
   }
   post {
     success {
-      // slackSend(channel: '#alarm-test', color: '#009900', message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-      slackSend(channel: '#alarm-test', color: 'good', message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend(channel: '#alarm-test', color: 'good', message: "Jenkins Job SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'\n (${env.BUILD_URL})")
     }
 
     failure {
-      // slackSend(channel: '#alarm-test', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-      slackSend(channel: '#alarm-test', color: 'danger', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend(channel: '#alarm-test', color: 'danger', message: "Jenkins Job FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'\n (${env.BUILD_URL})")
     }
 
+  }
+
+  def getHttpCode() {
+    script{
+          return sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
+        }
   }
 }
