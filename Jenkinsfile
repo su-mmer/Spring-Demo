@@ -29,7 +29,7 @@ pipeline {
       }
     }
 
-    stage('response http request') {
+    stage('application check') {
       when {
         expression {RESPONSE_CODE==200}
       }
