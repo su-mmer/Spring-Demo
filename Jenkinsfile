@@ -31,14 +31,14 @@ pipeline {
     }
 
     stage('application check') {
-      steps {
-        script {
-          echo "$RESPONSE_CODE"
-        }
-      }
-      // when {
-      //   equals expected: "${RESPONSE_CODE}", actual: 200
+      // steps {
+      //   script {
+      //     echo "$RESPONSE_CODE"  // 200
+      //   }
       // }
+      when {
+        equals expected: "${RESPONSE_CODE}", actual: "200"
+      }
       // steps {
         // script{
         //   RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
