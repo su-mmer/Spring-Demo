@@ -22,6 +22,11 @@ pipeline {
     }
 
     stage('response http request') {
+      def getHttpCode() {
+        script{
+          return sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
+        }
+      }
       when {
         expression {getHttpCode()==200}
       }
@@ -46,9 +51,5 @@ pipeline {
 
   }
 
-  def getHttpCode() {
-    script{
-          return sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
-        }
-  }
+  
 }
