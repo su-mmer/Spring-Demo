@@ -31,8 +31,10 @@ pipeline {
     }
 
     stage('application check') {
-      script {
-        echo "$RESPONSE_CODE"
+      steps {
+        script {
+          echo "$RESPONSE_CODE"
+        }
       }
       // when {
       //   equals expected: "${RESPONSE_CODE}", actual: 200
