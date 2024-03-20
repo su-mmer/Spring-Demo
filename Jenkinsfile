@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('start message to slack') {
       steps {
-          slackSend (channel: '#alarm-test', color: '#009900', message: "Jenkins Start Pipeline: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+          slackSend (channel: '#alarm-test', message: "Jenkins Start Pipeline: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
 
       }
     }
@@ -15,6 +15,14 @@ pipeline {
         }
 
       }
+    }
+    post {
+        success {
+            slackSend (channel: '#alarm-test', color: '#009900', message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+        failure {
+            slackSend (channel: '#alarm-test', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
     }
 
   }
