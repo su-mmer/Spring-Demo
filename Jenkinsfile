@@ -25,13 +25,14 @@ pipeline {
       steps {
         script{
           RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
+          echo "$RESPONSE_CODE"
         }
       }
     }
 
     stage('application check') {
       when {
-        expression {RESPONSE_CODE==200}
+        equals expected: ${RESPONSE_CODE}, actual: 200
       }
       // steps {
         // script{
