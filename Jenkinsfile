@@ -31,16 +31,19 @@ pipeline {
     }
 
     stage('application check') {
-      when {
-        equals expected: "${RESPONSE_CODE}", actual: 200
+      script {
+        echo "$RESPONSE_CODE"
       }
+      // when {
+      //   equals expected: "${RESPONSE_CODE}", actual: 200
+      // }
       // steps {
         // script{
         //   RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
         // }
-      steps {
-        slackSend (channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-      }
+      // steps {
+      //   slackSend (channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      // }
       // }
     }
 
