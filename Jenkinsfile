@@ -38,7 +38,7 @@ pipeline {
       }
 
       steps {
-        slackSend (channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Success Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        slackSend (channel: '#alarm-test', color: 'good', message: "Deploy Application Success Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
     }
 
@@ -48,7 +48,7 @@ pipeline {
       }
 
       steps {
-        slackSend (channel: '#alarm-test', color: '#0000CC', message: "Deploy Application Fail Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        slackSend (channel: '#alarm-test', color: 'danger', message: "Deploy Application Fail Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
     }
 
