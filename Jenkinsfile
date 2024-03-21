@@ -28,20 +28,20 @@ pipeline {
           // def RESPONSE_CODE = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true)
           // RESPONSE_CODE=sh(script: 'RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target}:8080) | echo $RESPONSE_CODE', returnStdout: true).trim()
           // echo "${RESPONSE_CODE.status}"
-          if ("${RESPONSE_CODE.status}"=="200") {
-            // FLAG=SUCCESS
-            echo "What is Problem"
-          }
-          else { FLAG=FAIL }
+          // if ("${RESPONSE_CODE.status}"=="200") {
+          //   // FLAG=SUCCESS
+          //   echo "What is Problem"
+          // }
+          // else { FLAG=FAIL }
 
-          echo FLAG
+          // echo FLAG
         }
       }
     }
 
     stage('application success') {
       when {
-        expression {"${FLAG}"=="SUCCESS"}
+        expression {"${RESPONSE_CODE.status}"=="200"}
         // equals expected: "${RESPONSE_CODE}", actual: "200"
       }
 
