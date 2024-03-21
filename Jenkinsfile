@@ -45,17 +45,17 @@ pipeline {
     }
 
     stage('application success') {
-      // when {
-      //   expression { "${FLAG}"=="200" }
-      //   // environment name : "FLAG", value : "200"
-      //   // equals expected: "${FLAG}", actual: "200"
-      // }
+      when {
+        expression { "${FLAG}"=="200" }
+        // environment name : "FLAG", value : "200"
+        // equals expected: "${FLAG}", actual: "200"
+      }
 
       steps {
         script {
-          echo "${FLAG}"
+          // echo "${FLAG}"
+          slackSend (channel: '#alarm-test', color: 'good', message: "Deploy Application Success Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
-        // slackSend (channel: '#alarm-test', color: 'good', message: "Deploy Application Success Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
     }
 
