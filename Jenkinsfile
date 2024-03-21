@@ -10,19 +10,18 @@ pipeline {
       }
     }
 
-    // stage('ssh deploy') {
-    //   steps {
-    //     sshagent(['heekey']) {
-    //       sh '''
-    //       ssh -o StrictHostKeyChecking=no hee@${target} '
-    //           nohup java -jar /home/hee/jenkins/demo-0.0.1-SNAPSHOT.jar >> /home/hee/log/application.log 2> /home/hee/log/error.log &
-    //           '
-
-    //       '''
-    //     }
-
-    //   }
-    // }
+    stage('ssh deploy') {
+      steps {
+        sshagent(['heekey']) {
+          sh '''
+          ssh -o StrictHostKeyChecking=no hee@${target} '
+              nohup java -jar /home/hee/jenkins/demo-0.0.1-SNAPSHOT.jar >> /home/hee/log/application.log 2> /home/hee/log/error.log &
+              '
+          sleep 20
+          '''
+        }
+      }
+    }
 
     stage('get http request') {
       steps {
