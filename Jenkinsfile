@@ -42,11 +42,11 @@ pipeline {
     }
 
     stage('application success') {
-      when {
-        expression { "${FLAG}"=="200" }
-        // environment name : "FLAG", value : "200"
-        // equals expected: "${FLAG}", actual: "200"
-      }
+      // when {
+      //   expression { "${FLAG}"=="200" }
+      //   // environment name : "FLAG", value : "200"
+      //   // equals expected: "${FLAG}", actual: "200"
+      // }
 
       steps {
         echo "${FLAG}"
