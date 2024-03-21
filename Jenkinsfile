@@ -29,6 +29,7 @@ pipeline {
           // RESPONSE_CODE=sh(script: 'RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target}:8080) | echo $RESPONSE_CODE', returnStdout: true).trim()
           // echo "${RESPONSE_CODE.status}"
           FLAG="${RESPONSE_CODE.status}"
+          echo FLAG
           // if ("${RESPONSE_CODE.status}"=="200") {
           //   // FLAG=SUCCESS
           //   echo "What is Problem"
@@ -43,8 +44,8 @@ pipeline {
     stage('application success') {
       when {
         // expression { "${RESPONSE_CODE.status}"=="200" }
-        environment name : "FLAG", value : "200"
-        // equals expected: "${RESPONSE_CODE}", actual: "200"
+        // environment name : "FLAG", value : "200"
+        equals expected: "${FLAG}", actual: "200"
       }
 
       steps {
