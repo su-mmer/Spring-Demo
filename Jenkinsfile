@@ -34,7 +34,7 @@ pipeline {
 
     stage('application success') {
       when {
-        expression {"${RESPONSE_CODE}"=="200"}
+        expression {"${RESPONSE_CODE.status}"=="200"}
         // equals expected: "${RESPONSE_CODE}", actual: "200"
       }
 
@@ -45,7 +45,7 @@ pipeline {
 
     stage('application fail') {
       when {
-        not { expression {"${RESPONSE_CODE}"=="200"} }
+        not { expression {"${RESPONSE_CODE.status}"=="200"} }
       }
 
       steps {
