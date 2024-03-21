@@ -14,7 +14,7 @@ pipeline {
           ssh -o StrictHostKeyChecking=no hee@${target} '
               nohup java -jar /home/hee/jenkins/demo-0.0.1-SNAPSHOT.jar >> /home/hee/log/application.log 2> /home/hee/log/error.log &
               '
-          // sleep 20
+
           '''
         }
 
