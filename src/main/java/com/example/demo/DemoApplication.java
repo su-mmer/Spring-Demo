@@ -14,8 +14,8 @@ public class DemoApplication {
 	}
 
 	@GetMapping(value = "/")
-	// public String doGetHelloWorld() {
-	// 	return "Hello World";
-	// }
+	public String doGetHelloWorld() {
+		return "Hello World";
+	}
 	// public String doGetHelloWorld() { return "This is Second Hello World"; }
 }
