@@ -14,7 +14,7 @@ pipeline {
           ssh -o StrictHostKeyChecking=no hee@${target} '
               nohup java -jar /home/hee/jenkins/demo-0.0.1-SNAPSHOT.jar >> /home/hee/log/application.log 2> /home/hee/log/error.log &
               '
-          sleep 20
+          // sleep 20
           '''
         }
 
@@ -29,7 +29,8 @@ pipeline {
           // RESPONSE_CODE=sh(script: 'RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target}:8080) | echo $RESPONSE_CODE', returnStdout: true).trim()
           // echo "${RESPONSE_CODE.status}"
           if ("${RESPONSE_CODE.status}"=="200") {
-            FLAG=SUCCESS
+            // FLAG=SUCCESS
+            echo "What is Problem"
           }
           else { FLAG=FAIL }
 
