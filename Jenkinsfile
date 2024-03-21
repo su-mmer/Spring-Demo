@@ -53,16 +53,16 @@ pipeline {
       }
     }
 
-    // stage('application fail') {
-    //   when {
-    //     not {
-    //       expression { "${FLAG}"=="200" }
-    //     }
-    //   }
-    //   steps {
-    //     slackSend (channel: '#alarm-test', color: 'danger', message: "Deploy Application Fail Code ${FLAG}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-    //   }
-    // }
+    stage('application fail') {
+      when {
+        not {
+          expression { sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true) }
+        }
+      }
+      steps {
+        slackSend (channel: '#alarm-test', color: 'danger', message: "Deploy Application Fail Code ${FLAG}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      }
+    }
 
     // stage('response http request') {
     //   steps {
