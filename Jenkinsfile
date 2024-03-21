@@ -28,7 +28,7 @@ pipeline {
           // def RESPONSE_CODE = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true)
           // RESPONSE_CODE=sh(script: 'RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target}:8080) | echo $RESPONSE_CODE', returnStdout: true).trim()
           // echo "${RESPONSE_CODE.status}"
-          if (${RESPONSE_CODE.status}==200) {
+          if ("${RESPONSE_CODE.status}"==200) {
             FLAG=SUCCESS
           }
           else { FLAG=FAIL }
