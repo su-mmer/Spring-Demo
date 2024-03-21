@@ -7,19 +7,19 @@ pipeline {
       }
     }
 
-    stage('ssh deploy') {
-      steps {
-        sshagent(['heekey']) {
-          sh '''
-          ssh -o StrictHostKeyChecking=no hee@${target} '
-              nohup java -jar /home/hee/jenkins/demo-0.0.1-SNAPSHOT.jar >> /home/hee/log/application.log 2> /home/hee/log/error.log &
-              '
+    // stage('ssh deploy') {
+    //   steps {
+    //     sshagent(['heekey']) {
+    //       sh '''
+    //       ssh -o StrictHostKeyChecking=no hee@${target} '
+    //           nohup java -jar /home/hee/jenkins/demo-0.0.1-SNAPSHOT.jar >> /home/hee/log/application.log 2> /home/hee/log/error.log &
+    //           '
 
-          '''
-        }
+    //       '''
+    //     }
 
-      }
-    }
+    //   }
+    // }
 
     stage('get http request') {
       steps {
@@ -28,7 +28,7 @@ pipeline {
           // def RESPONSE_CODE = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true)
           // RESPONSE_CODE=sh(script: 'RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target}:8080) | echo $RESPONSE_CODE', returnStdout: true).trim()
           // echo "${RESPONSE_CODE.status}"
-          FLAG="${RESPONSE_CODE.status}"
+          String FLAG="${RESPONSE_CODE.status}"
           // echo FLAG
           // if ("${RESPONSE_CODE.status}"=="200") {
           //   // FLAG=SUCCESS
@@ -36,7 +36,7 @@ pipeline {
           // }
           // else { FLAG=FAIL }
 
-          // echo FLAG
+          echo "${FLAG}"
         }
       }
     }
