@@ -43,21 +43,23 @@ pipeline {
 
     stage('application success') {
       when {
-        // expression { "${RESPONSE_CODE.status}"=="200" }
+        expression { "${FLAG}"=="200" }
         // environment name : "FLAG", value : "200"
-        equals expected: "${FLAG}", actual: "200"
+        // equals expected: "${FLAG}", actual: "200"
       }
 
       steps {
+        echo "${FLAG}"
         slackSend (channel: '#alarm-test', color: 'good', message: "Deploy Application Success Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
     }
 
     stage('application fail') {
-      when {
-        expression {"${FLAG}"=="FAIL"}
+      not {
+        when {
+          expression { "${FLAG}"=="200" }
+        }
       }
-
       steps {
         slackSend (channel: '#alarm-test', color: 'danger', message: "Deploy Application Fail Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
