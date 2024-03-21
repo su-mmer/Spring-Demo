@@ -24,30 +24,31 @@ pipeline {
     //   }
     // }
 
-    // stage('get http request') {
-    //   steps {
-    //     script{
-    //       // def RESPONSE_CODE = httpRequest "http://${target}:8080"
-    //       def RESPONSE_CODE = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true)
-    //       // RESPONSE_CODE=sh(script: 'RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target}:8080) | echo $RESPONSE_CODE', returnStdout: true).trim()
-    //       // echo "${RESPONSE_CODE.status}"
-    //       // FLAG="${RESPONSE_CODE.status}"
-    //       FLAG="${RESPONSE_CODE}"
-    //       // echo FLAG
-    //       echo "${FLAG}"
-    //     }
-    //   }
-    // }
+    stage('get http request') {
+      steps {
+        script{
+          // def RESPONSE_CODE = httpRequest "http://${target}:8080"
+          def RESPONSE_CODE = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080/hee', returnStdout: true)
+          // RESPONSE_CODE=sh(script: 'RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target}:8080) | echo $RESPONSE_CODE', returnStdout: true).trim()
+          // echo "${RESPONSE_CODE.status}"
+          // FLAG="${RESPONSE_CODE.status}"
+          FLAG="${RESPONSE_CODE}"
+          // echo FLAG
+          echo "${FLAG}"
+        }
+      }
+    }
 
     stage('application success') {
       when {
-        expression { sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true) }
+        expression { "${FLAG}"=="200" }
         // environment name : "FLAG", value : "200"
         // equals expected: "${FLAG}", actual: "200"
       }
 
       steps {
         script {
+          // echo "${FLAG}"
           slackSend (channel: '#alarm-test', color: 'good', message: "Deploy Application Success Code ${FLAG}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
       }
@@ -56,7 +57,7 @@ pipeline {
     stage('application fail') {
       when {
         not {
-          expression { sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true) }
+          expression { "${FLAG}"=="200" }
         }
       }
       steps {
