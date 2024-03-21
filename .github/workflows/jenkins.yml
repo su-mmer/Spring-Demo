@@ -39,6 +39,17 @@ jobs:
         target: /home/hee/jenkins
         strip_components: 2
 
+  deploy-production:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - uses: actions/checkout@v4
+    - name: approve to deploy
+      run: echo 'waiting approve'
+  
+  jenkins-run:
+    runs-on: ubuntu-latest
+    steps:
     - name: Trigger jenkins Job
       uses: appleboy/jenkins-action@master
       with:
