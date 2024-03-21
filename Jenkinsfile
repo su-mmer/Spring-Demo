@@ -45,7 +45,7 @@ pipeline {
       when {
         // expression { "${RESPONSE_CODE.status}"=="200" }
         // environment name : "FLAG", value : "200"
-        equals expected: "${FLAG}", actual: 200
+        equals expected: "${FLAG}", actual: "200"
       }
 
       steps {
