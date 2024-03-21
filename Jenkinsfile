@@ -54,7 +54,7 @@ pipeline {
       steps {
         script {
           // echo "${FLAG}"
-          slackSend (channel: '#alarm-test', color: 'good', message: "Deploy Application Success Code ${RESPONSE_CODE}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+          slackSend (channel: '#alarm-test', color: 'good', message: "Deploy Application Success Code ${FLAG}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
       }
     }
