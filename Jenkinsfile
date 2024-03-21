@@ -21,16 +21,17 @@ pipeline {
       }
     }
 
-    stage('response http request') {
+    stage('get http request') {
       steps {
         script{
-          RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
+          // RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true).trim();
+          RESPONSE_CODE=sh 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080'
           echo "$RESPONSE_CODE"
         }
       }
     }
 
-    stage('application check success') {
+    stage('application success') {
       when {
         expression {"${RESPONSE_CODE}"=="200"}
         // equals expected: "${RESPONSE_CODE}", actual: "200"
@@ -41,9 +42,9 @@ pipeline {
       }
     }
 
-    stage('application check fail') {
+    stage('application fail') {
       when {
-        expression {"${RESPONSE_CODE}"!="200"}
+        not { expression {"${RESPONSE_CODE}"=="200"} }
       }
 
       steps {
