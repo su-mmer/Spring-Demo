@@ -39,7 +39,8 @@ jobs:
         target: /home/hee/jenkins
         strip_components: 2
 
-  deploy-production:
+  approve:
+    needs: build
     runs-on: ubuntu-latest
     environment: dev
     steps:
@@ -48,6 +49,7 @@ jobs:
       run: echo 'waiting approve'
   
   jenkins-run:
+    needs: approve
     runs-on: ubuntu-latest
     steps:
     - name: Trigger jenkins Job
