@@ -55,8 +55,8 @@ pipeline {
     }
 
     stage('application fail') {
-      not {
-        when {
+      when {
+        not {
           expression { "${FLAG}"=="200" }
         }
       }
