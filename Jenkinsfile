@@ -24,7 +24,8 @@ pipeline {
     stage('get http request') {
       steps {
         script{
-          RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true)
+          def RESPONSE_CODE = (script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true)
+          // RESPONSE_CODE=sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true)
           // RESPONSE_CODE=sh 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080'
           echo "$RESPONSE_CODE"
         }
