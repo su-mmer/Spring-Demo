@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    FLAG="FAIL"
+  }
   stages {
     stage('start message to slack') {
       steps {
@@ -28,7 +31,7 @@ pipeline {
           // def RESPONSE_CODE = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://${target}:8080', returnStdout: true)
           // RESPONSE_CODE=sh(script: 'RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${target}:8080) | echo $RESPONSE_CODE', returnStdout: true).trim()
           // echo "${RESPONSE_CODE.status}"
-          String FLAG="${RESPONSE_CODE.status}"
+          FLAG="${RESPONSE_CODE.status}"
           // echo FLAG
           // if ("${RESPONSE_CODE.status}"=="200") {
           //   // FLAG=SUCCESS
