@@ -32,7 +32,8 @@ pipeline {
 
     stage('application check success') {
       when {
-        equals expected: "${RESPONSE_CODE}", actual: "200"
+        expression {"${RESPONSE_CODE}"=="200"}
+        // equals expected: "${RESPONSE_CODE}", actual: "200"
       }
 
       steps {
