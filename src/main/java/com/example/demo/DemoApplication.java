@@ -17,5 +17,5 @@ public class DemoApplication {
 	// public String doGetHelloWorld() {
 	// 	return "Hello World";
 	// }
-	public String doGetHelloWorld() { return "This is Second Hello World"; }
+	// public String doGetHelloWorld() { return "This is Second Hello World"; }
 }
