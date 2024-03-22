@@ -47,7 +47,7 @@ jobs:
         slack-message: "GitHub Action build result: ${{ job.status }}\nApprove to Deploy: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\nRepository: ${{ github.repository}}\nJob: ${{ github.workflow }}/${{ github.job }}(#${{ github.run_number }})"
       env:
         # SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
   approve:
