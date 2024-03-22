@@ -52,14 +52,25 @@ jobs:
       with:
         payload: |
           {
-            "text": "GitHub Action build result: ${{ job.status }}\nApprove to Deploy: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\nRepository: ${{ github.repository}}\nJob: ${{ github.workflow }}/${{ github.job }}(#${{ github.run_number }})",
-            "blocks": [
+            "channel": "alarm-test",
+            "attachments": [
               {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "What is this block?"
-                }
+                "color": "good",
+                "title": "${{ github.repository }}", 
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", 
+                "text": "GitHub Action build SUCCESS",
+                "fields": [
+                  {
+                    "title": "Repository",
+                    "value": "${{ github.repository }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Tag",
+                    "value": "${{ github.ref_name }}",
+                    "short": true
+                  }
+                ]      
               }
             ]
           }
