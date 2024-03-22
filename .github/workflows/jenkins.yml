@@ -40,13 +40,30 @@ jobs:
         strip_components: 2
 
     - name: Slack Notification
-      id: slack
       uses: slackapi/slack-github-action@v1.25.0
       with:
         channel-id: 'alarm-test'
         slack-message: "GitHub Action build result: ${{ job.status }}\nApprove to Deploy: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\nRepository: ${{ github.repository}}\nJob: ${{ github.workflow }}/${{ github.job }}(#${{ github.run_number }})"
       env:
-        # SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    
+    - name: Slack webhook
+      uses: slackapi/slack-github-action@v1.25.0
+      with:
+        payload: |
+          {
+            "text": "GitHub Action build result: ${{ job.status }}\nApprove to Deploy: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\nRepository: ${{ github.repository}}\nJob: ${{ github.workflow }}/${{ github.job }}(#${{ github.run_number }})",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "What is this block?"
+                }
+              }
+            ]
+          }
+      env: 
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
