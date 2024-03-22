@@ -47,7 +47,7 @@ jobs:
         # status: ${{ job.status }}
         # fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
         # slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-        slack-message: "GitHub build result: ${{ job.status }}\ngithub.actor_id: ${{ github.actor_id }}\napi_url: ${{ github.api_url }}\nrun_id: ${{ github.run_id }}\nrun_number: ${{ github.run_number }}"  # workflow link 뜰 수 있게 하자!!
+        slack-message: "GitHub build result: ${{ job.status }}\npull_requ: ${{ github.event.pull_request.html_url }}\nrun_id: ${{ github.run_id }}\nrun_number: ${{ github.run_number }}"  # workflow link 뜰 수 있게 하자!!
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         # SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
