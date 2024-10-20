@@ -2,8 +2,18 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.3'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'com.google.cloud.tools.jib' version '3.4.3'
 }
 
+jib {
+	from {
+		image = "eclipse-temurin:17-jre"
+	}
+	to {
+		image = "summer99summer/tkntest"
+		tags = ["latest"]
+	}
+}
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
